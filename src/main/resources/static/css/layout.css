@@ -1,0 +1,155 @@
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #62c474;
+}
+
+.nav-wrapper {
+
+    background-color: #62c474;
+}
+
+.logo-class {
+
+    margin-top: 8px;
+    margin-left: 8px;
+}
+
+.small material-icons {
+    color: #62c474;
+}
+
+.mainClass {
+    background-color: #f6f6f6;
+}
+
+.small material-icons prefix {
+    top: 4px;
+}
+
+.icons-columns {
+
+    display: inline-flex;
+}
+.pagination .active{
+    background-color: #62c474 !important;
+
+}
+.pagination .active a{
+    color: white;
+}
+
+.seconduser-class{
+    font-size:22px;
+    margin-bottom: 10px;
+    margin-top: 0px;}
+.titleUser-Class{
+
+    font-size: 22px;
+    margin-bottom: 10px;
+    margin-top: 0px;
+}
+.autocomplete .white-text{
+   text-emphasis-color:white ;
+}
+.input-field .prefix {
+    position: absolute;
+    width: 3rem;
+    font-size: 2rem;
+    -webkit-transition: color .2s;
+    transition: color .2s;
+    top: .5rem;
+    color: white;
+    box-shadow: none;
+}
+.autocomplete .white-text{
+
+    box-shadow: none;
+}
+
+.close-button{
+    background-color: #d1d1d1;
+}
+.add-button{
+    background-color: #62c474;
+    margin-left: 4px;
+}
+.update-button{
+    background-color: #62c474;
+    margin-left: 4px;
+}
+.delete-button{
+    background-color: #62c474;
+}
+.goPage-button{
+    background-color: #d1d1d1;
+    margin-left: 4px;
+}
+.add-cursor{
+    cursor:pointer;
+}
+.qualist-text{
+    margin-right: -187px;
+}
+.new-usertitle{
+    font-size: 25px;
+margin-bottom: -8px;
+}
+.titlePrivilege-Class{
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+.privilegeClass{
+    margin-top: -14px;
+}
+
+.disabled-event{
+    opacity: 0.4;
+    cursor: no-drop;
+    color:  #afafaf;
+
+
+}
+.special-footer{
+    color: white;
+    margin-left: 520px;
+    cursor:pointer;
+}
+.privilege-delete{
+    color: #62c474;
+
+}
+.input-field.col label {
+    left: 0 ;
+    padding-left: 10px;
+ }
+.disabled-right{
+    opacity: 0.4;
+    cursor: no-drop;
+    color:  #afafaf;
+}
+.delete-button:hover{
+    background-color: #09401a;
+}
+.update-button:hover{
+    background-color: #09401a;
+}
+.add-button:hover{
+    background-color: #09401a;
+}
+.close-button:hover{
+    background-color: #757575;
+}
+.goPage-button:hover{
+    background-color: #757575;
+}
+.login-btn{
+    background-color: #62c474;
+}
+.headline-text{
+    color: #62c474;
+}
+.login-btn:hover{background-color: #09401a;}

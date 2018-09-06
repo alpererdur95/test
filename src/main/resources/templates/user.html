@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>GreenChimney Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/icon.css" />
+    <link rel="stylesheet" type="text/css" href="/css/materialize.css"/>
+    <script src="/js/materialize.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/layout.css"/>
+    <script type="text/javascript"
+            src="/js/jquery-2-1-1-min.js"></script>
+    <script src="/js/jquery-min.js" type="text/javascript"></script>
+    <script src="js/jquery-mask.js"
+            type="text/javascript"></script>
+    <script src="/js/user.js"></script>
+    <script src="/js/login.js"></script>
+</head>
+<body class="mainClass">
+<nav>
+    <div class="nav-wrapper">
+        <a><img class="logo-class" src="/images/chimney-logo.jpg"></a>
+        <ul id="nav-mobile" class="right">
+            <li>
+                <div class="center">
+                    <div class="col s12 ">
+                        <div id="topbarsearch">
+                            <div class="input-field col s6 s12 white-text">
+                                <i id="searchCustom" onclick="customSearch()"
+                                   class="small material-icons prefix add-cursor" style="
+    top: 4px;">search</i>
+                                <input type="text" placeholder="Arama" id="searchingKey"
+                                       class="autocomplete white-text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li><a href="createuser.html" th:href="@{/createuser}"><i class="material-icons right">group_add</i>Yeni Kullanıcı Kaydet</a></li>
+            <li><a onclick="Logout()" id="log-out"><i class="material-icons right">power_settings_new</i>Çıkış</a></li>
+
+
+        </ul>
+    </div>
+</nav>
+<div th:if="${#lists.isEmpty(users)}">
+    <p th:text="${message}"></p>
+</div>
+<table class="responsive-table" id="main-user" th:if="${not #lists.isEmpty(users)}">
+
+    <thead>
+    <tr>
+        <th>Ad</th>
+        <th>Soyad</th>
+        <th>Email</th>
+        <th>Telefon Numarası</th>
+        <th>Oluşturulma Tarihi</th>
+        <th>Güncelleme Tarihi</th>
+        <th></th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+
+    <tr th:each="user,iterationStatus  : ${users}" class="striped">
+        </td>
+        <td th:text="${user.firstname}"></td>
+        <td th:text="${user.lastname}"></td>
+        <td th:text="${user.email}"></td>
+        <td name="arrival-phonenumber" th:text="${user.cell}"></td>
+        <td th:text="${#dates.format(user.created,'dd-MM-yyyy')+' '+#dates.format(user.created,'HH:mm')}"></td>
+        <td th:text="${#dates.format(user.updated,'dd-MM-yyyy')+' '+#dates.format(user.updated,'HH:mm')}"></td>
+        <td class="icons-columns">
+            <a class="secondary-content user-item add-cursor"><i
+                    class=" waves effect small material-icons modal-trigger"
+                    href="#modal3" th:id="${user.uid}" title="Kullanıcı Sil"
+                    onclick="showDeletePopup(event)" style="
+    color: #62c474;
+">delete</i></a>
+            <a class="waves effect secondary-content user-item add-cursor"><i
+                    class=" waves effect btn-user-edit small material-icons modal-trigger"
+                    th:id="${user.uid}" title="Kullanıcı Editleme" style="
+    color: #62c474;
+" onclick="getUserAndShowPopup(event)"
+                    href="#modal1">create</i></a>
+            <a class="waves effect secondary-content user-item add-cursor"><i
+                    class=" waves effect btn-user-edit small material-icons modal-trigger"
+                    th:id="${user.uid}" style="
+    color: #62c474;
+" onclick="getUserSecond(event)" title="Kullanıcı Yetkilendirme"
+                    href="#modal2">account_circle</i></a>
+
+
+        </td>
+
+    </tr>
+
+    </tbody>
+
+</table>
+<span id="page-count" th:value="${pageCount}" style="display: none" aria-hidden="true"> </span>
+<span id="country-count" th:value="${countryCode}" style="display: none" aria-hidden="true"> </span>
+<ul class="pagination" id="page-open">
+</ul>
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <p id="title-seconduser" class="seconduser-class"></p>
+        <div>
+            <form class="col s12">
+                <div class="row">
+                    <div class="input-field col s6 m3">
+                        <input readonly th:value="." id="modal-id" type="text" class="validate" autocomplete="id">
+                        <label for="modal-id" class="active">ID</label>
+                    </div>
+                    <div class="input-field col s6 m3">
+                        <input id="modal-first-name" th:value="." type="text" class="validate"
+                               autocomplete="firstname">
+                        <label for="modal-first-name">Ad</label>
+                    </div>
+                    <div class="input-field col s6 m3">
+                        <input id="modal-middle-name" type="text" value=" " class="validate"
+                               autocomplete="middlename">
+                        <label for="modal-middle-name">Göbek Adı</label>
+                    </div>
+                    <div class="input-field col s6 m3">
+                        <input id="modal-last-name" th:value="." type="text" class="validate"
+                               autocomplete="lastname">
+                        <label for="modal-last-name">Soyad</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s8 m6">
+                        <input id="modal-email" th:value="." type="email" class="validate" autocomplete="email">
+                        <label for="modal-email">Eposta</label>
+                    </div>
+                    <div class="input-field col s4 m6">
+                        <input id="modal-pass" type="password" th:value="." class="validate" autocomplete="pass">
+                        <label for="modal-pass">Şifre</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s3 m2">
+                        <select id="cell-country">
+                            <option th:value="${country}"
+                                    th:each="country,iterationStatus  : ${countryCode}"
+                                    th:text="${country}"></option>
+                        </select>
+                        <label>Ülke Kodu</label>
+                    </div>
+                    <div class="input-field col s9 m10">
+                        <input id="modal-cell" type="text" th:value="." name="phone-number" class="validate"
+                               autocomplete="cell">
+                        <label for="modal-cell">Cep Telefonu</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <a class="  secondary-content user-item waves-effect waves-light  btn update-button" id="save"
+                           onclick="updateUser()">
+                            Kaydet</a>
+                        <a class="modal-close secondary-content user-item waves-effect waves-light btn close-button"
+                           id="close">
+                            Vazgeç</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="modal2" class="modal">
+    <div class="modal-content">
+        <p id="title-user" class="titleUser-Class"></p>
+        <div>
+            <form class="col s12">
+                <div class="row">
+                    <div class="input-field col s6 m6">
+                        <input readonly th:value="." id="ID" type="text" class="validate" autocomplete="id">
+                        <label for="ID" class="active">ID</label>
+                    </div>
+                    <div class="input-field col s6 m6">
+                        <input readonly id="userInfo" th:value="." type="text" class="validate"
+                               autocomplete="firstname">
+                        <label for="userInfo">Ad-Soyad</label>
+                    </div>
+                    <div class="input-field col s12 m12 privilegeClass">
+                        <p id="title-privilege" class="titlePrivilege-Class">Mevcut Yetkiler</p>
+                        <table id="usertable">
+                        </table>
+                    </div>
+                    <div>
+                        <div class="input-field col s6 m6" id="privilege-select-div">
+                            <select multiple id="privileges">
+                                <option th:each="privilege,iterationStatus  : ${privileges}"
+                                        th:text="${privilege.privilegename}"
+                                        th:value="${privilege.privilegename}">
+
+                                </option>
+                            </select>
+                            <label>Yetkiler:</label>
+                        </div>
+                        <div class="input-field col s6 m6">
+                            <input id="resourceName" type="text" class="validate" autocomplete="pass">
+                            <label for="resourceName">Baca ID</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <a class=" secondary-content user-item waves-effect waves-light btn add-button"
+                       id="saveButton" onclick="addPrivilege()">
+                        Kaydet</a>
+                    <a class=" modal-close secondary-content user-item waves-effect waves-light btn close-button"
+                       id="closeButton">
+                        Vazgeç
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<div id="modal3" class="modal">
+    <div class="modal-content">
+        <p id="title-delete" class="titleUser-Class"></p>
+        <p>Kullanıcının Tüm Yetkilerini Kaldırmak İstediğinize Emin Misiniz ?</p>
+    </div>
+
+    <div class="modal-footer">
+        <a id="Disagree" onclick="clearİd()"
+           class=" modal-close waves-effect waves-green btn close-button">Hayır</a>
+        <a id="Agree" onclick="contuineDelete()" class="modal-close waves-effect waves-light btn delete-button ">Evet</a>
+
+
+    </div>
+</div>
+     </div>
+    </div>
+
+</div>
+<footer class="footer">
+
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+
+            </div>
+            <div class="col l4 offset-l2 s12">
+
+
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container footer-copy special-footer html-editor-align-center " onclick="goToQualist()">
+            © 2018 Pratikkod Yazılım Geliştirme ve Tic A.Ş.
+        </div>
+    </div>
+
+</footer>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('select');
+        M.FormSelect.init(elems);
+
+    });
+    var input = document.getElementById("searchingKey");
+    input.addEventListener("keyup", function (event) {
+        event.preventDefault();
+        if (event.keyCode === 13) {
+            customSearch();
+        }
+    });
+    $('input[name="phone-number"]').mask('(000) 000 0000');
+    $('td[name="arrival-phonenumber"]').mask('+00 (000) 000 00  00');
+</script>
+</body>
+</html>
